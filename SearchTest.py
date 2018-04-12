@@ -31,7 +31,7 @@ execution_time = time.time() - start_time
 print("Norm took %f seconds." % execution_time)
 
 start_time = time.time()
-scores = song_search("Please go fuck yourself", inv_idx, idf, doc_norms)
+scores = song_search("God I'm so hungry", inv_idx, idf, doc_norms)
 execution_time = time.time() - start_time
 
 print("Song search took %f seconds." % execution_time)
