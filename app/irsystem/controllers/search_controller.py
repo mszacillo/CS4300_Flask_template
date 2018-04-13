@@ -3,7 +3,7 @@ from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
 
 project_name = "Tunage: Finding songs to send a message"
-net_id = "Michas Szacillo: (mas744), Gabrielle Haam (ggh39), Spencer Weiss (scw99), Wyatt Queirlo (wfq2), Filip Relander (far68)"
+net_id = "Michas Szacillo: (mas744), Gabrielle Haam (ggh39), Spencer Weiss (scw99), Wyatt Queirolo (wfq2), Filip Relander (far68)"
 
 @irsystem.route('/', methods=['GET'])
 def search():

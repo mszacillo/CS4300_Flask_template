@@ -1,7 +1,4 @@
 @media (min-width: 1200px) {
-.container {
-    max-width: 970px;
-}
 }
 @media (min-width:400px){
 .global-search {
@@ -9,8 +6,15 @@ padding: 20px 0;
 text-align:center;
 }
 body {
-padding-top: 15%;
-padding-bottom: 15px;
+}
+.personalcontainer{
+    padding-left:5%;
+    padding-right:5%;
+    padding-top:2%;
+    background-color: #004080;
+    height:100%;
+    color:#d1d1e0;
+	font-family: 'Lato', sans-serif;
 }
 .global-search {
 text-align:center;
@@ -23,9 +27,13 @@ width:500px;
 display:inline-block;
 margin-bottom:0;
 }
+.searchform{
+	padding-top:5%;
+}
 }
 .topcorner{
-position:absolute;
+display:inline-block;
+position:relative;
 top:2%;
 right:2%;
 }
@@ -35,4 +43,16 @@ border: none
 }
 .step-links a{
 color: #4285F4;
+}
+.projectdetails{
+	line-height:1;
+}
+h1{
+	color:#d1d1e0;
+	font-family: 'Lato', sans-serif;
+	font-size: 80px;
+	font-style:italic;
+}
+.form-group{
+	padding:20px;
 }
