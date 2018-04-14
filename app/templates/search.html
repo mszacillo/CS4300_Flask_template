@@ -2,6 +2,8 @@
     <head>
         <link rel="stylesheet" href="/static/bootstrap.min.css">
         <link rel="stylesheet" href="/static/main.css">
+        <script src="static/js/jquery-1.9.0.js"> </script>
+        <script src="../javascript/script.js"> </script>
     </head>
     <body>
         <div class="personalcontainer">
@@ -9,7 +11,7 @@
                 <p class="projectdetails">Project Name: {{ name }}</p>
                 <p class="projectdetails">Student Name: ({{ netid }})</p>
             </div>
-            <form class="form-inline global-search searchform">
+            <form class="form-inline global-search searchform" id = "search" method="post" role="form">
                 <h1>
                     Tunage
                 </h1>
