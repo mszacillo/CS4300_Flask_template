@@ -11,27 +11,40 @@
                 <p class="projectdetails">Project Name: {{ name }}</p>
                 <p class="projectdetails">Student Name: ({{ netid }})</p>
             </div>
-            <form class="form-inline global-search searchform" id = "search" method="post" role="form">
+            <form class="form-inline global-search searchform">
                 <h1>
                     Tunage
                 </h1>
                 <p>Your message in song form<p>
                 <br><br>
-                
-                <div class="form-group">
-                    <input id="input" type="text" name="search" class="form-control" placeholder="Your Input">
-                </div>
-                <button type="submit" class="btn btn-info"> Go! </button>
-            </form>
-            <form class="form-inline global-search">
-            {% if data %}
-                <h1>{{output_message}}</h1>
-                {% for d in data %}  
-                    <br>
-                    <p>{{d}}</p>
-                {% endfor %}
-            {% endif %}
-            </form>
+                <div class="clearline">
+                    <div class="form-group">
+                        <input id="input" type="text" name="search" class="form-control" placeholder="Your Input">
+                    </div>
+                    <button type="submit" class="btn btn-info"> Go! </button>
+                </form>
+            </div>
+            <div class="searchresults">
+                <form class="form-inline global-search">
+                {% if data %}
+                    <h1 class="searchheader">{{output_message}}</h1>
+                    <table class="data-results">
+                            <tr class="resultheader">
+                                <th class="playbutton"></th>
+                                <th>Title</th>
+                                <th>Artist</th>
+                            </tr>
+                    {% for d in data %}  
+                            <tr class="result-item">
+                                <td class="playbutton"><img src="../../images/playbutton.png"></img></td>
+                                <td class="data-songname">{{d.song}}</td>
+                                <td class="data-artist">{{d.artist}}</td>
+                            </tr>
+                    {% endfor %}
+                    </table>
+                {% endif %}
+                </form>
+            </div>
         </div>
     </body>
 
