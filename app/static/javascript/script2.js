@@ -1,5 +1,5 @@
 $(window).ready(function(){
-	$('button').click(function(){
+	$('#mainform').submit(function(){
 		var query = {"search":$('#input').val()};
 		$.ajax({
 			url: 'search',
