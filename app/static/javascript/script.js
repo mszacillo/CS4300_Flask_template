@@ -1,5 +1,5 @@
 $(window).ready(function(){
-	$('button').click(function(){
+	function getResults(){
 		var query = {"search":$('#input').val()};
 		$.ajax({
 			url: 'search',
@@ -13,8 +13,7 @@ $(window).ready(function(){
 				for(var i = 0; i < 10; i++){
 					htmlOutput += "<p> Artist: " + JSON.stringify(j[i]['artist'])
 					+ "<br> Title: " + JSON.stringify(j[i]['title'])
-					+ "<br> Match Score: " + JSON.stringify(j[i]['score'])
-					+ "<br><br>";
+					+ "<br> Match Score: " + JSON.stringify((j[i]['score']).toFixed(2))
 				};
 				htmlOutput += "</p>";
 				$('.searchresults').html(htmlOutput)
@@ -23,5 +22,13 @@ $(window).ready(function(){
 				console.log(error);
 			}
 		});
+	};
+	$('button').click(function(){
+		getResults();
+		return false;
 	});
+	$('form').submit(function(){
+		getResults();
+		return false;
+	})
 });
