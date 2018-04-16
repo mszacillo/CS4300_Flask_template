@@ -69,3 +69,7 @@ h1{
 .searchresults p:nth-child(odd){
 	background-color: #ff9602;
 }
+#formheader{
+	clear:both;
+	width:100%;
+}
