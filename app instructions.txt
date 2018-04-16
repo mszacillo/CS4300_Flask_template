@@ -1,0 +1,8 @@
+virtualenv -p python2.7 venv
+source venv/bin/activate
+pip install -r requirements.txt
+Python app.py
+ —> “Flask app running at ***** http://0.0.0.0:5000 ****
+ * Restarting with stat” 
+
+Copy / Paste the url (without asterisks) into web browser
