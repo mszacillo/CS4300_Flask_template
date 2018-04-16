@@ -16,9 +16,10 @@ print("loading this page")
 def getQuery():
 	inputquery = request.form['search'];
 	returnquery = runQuery(inputquery)
-	score = returnquery[0][0]
-	idx = returnquery[0][1]
-	return json.dumps({'status':'OK', "title": SONGS[idx]['title'], "score": score})
+	data = []
+	for i in returnquery:
+		data.append({'title':SONGS[i[1]]['title'],'artist':SONGS[i[1]]['artist'],'score':i[0]})
+	return json.dumps({'status':'OK', "data":data})
 
 def runQuery(query):
 	tokenized_songs = tokenize_transcript(SONGS)

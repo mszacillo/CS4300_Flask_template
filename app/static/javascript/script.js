@@ -7,11 +7,10 @@ $(window).ready(function(){
 			type: 'POST',
 			success: function(response) {
 				console.log(response);
-				console.log("yayyyy")
+				$('.searchresults').html(response)
 			},
 			error: function(error){
 				console.log(error);
-				console.log("My call failed")
 			}
  
 		});

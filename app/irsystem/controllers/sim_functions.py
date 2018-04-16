@@ -10,7 +10,7 @@ tokenizer = TreebankWordTokenizer()
 
 def tokenize_transcript(transcripts):
 	for idx, song in enumerate(transcripts):
-		lyrics = song["lyrics"]
+		lyrics = str(song["lyrics"])
 		lyrics = lyrics.replace("\\n", " ").replace("[Hook", " ").replace("[Verse", " ").replace("b", " ", 1)
 		transcripts[idx]["lyrics"] = re.findall(r"[a-z]+", lyrics.lower())
 
