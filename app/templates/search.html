@@ -8,10 +8,6 @@
     </head>
     <body>
         <div class="personalcontainer">
-            <div class="topcorner">
-                <p class="projectdetails">Project Name: {{ name }}</p>
-                <p class="projectdetails">Student Name: ({{ netid }})</p>
-            </div>
             <form class="form-inline global-search searchform" id="mainform" target="_self">
                 <div id="formheader">
                     <h1>
@@ -44,6 +40,10 @@
                     </table>
                 {% endif %}
                 </form>
+            </div>
+            <div class="footer">
+                <p class="projectdetails">Project Name: {{ name }}</p>
+                <p class="projectdetails">Student Name: ({{ netid }}</p>
             </div>
         </div>
     </body>
