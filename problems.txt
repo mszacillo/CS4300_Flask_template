@@ -1,0 +1,6 @@
+PROBLEMS
+
+• Hitting return and generating results
+• Vertical bounds on search results
+• Horizontal bounds on “you searched: “
+• Really just not enough hours in the day

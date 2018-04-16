@@ -1,4 +1,4 @@
-from . import *  
+from . import *
 from sim_functions import *
 from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
@@ -14,8 +14,8 @@ print("loading this page")
 
 @irsystem.route('search',methods=["POST"])
 def getQuery():
-	inputquery = request.form['search'];
-	returnquery = runQuery(inputquery)
+	inputquery = request.form['search'].lower()
+	returnquery = runQuery(inputquery.lower())
 	data = []
 	for i in returnquery:
 		data.append({'title':SONGS[i[1]]['title'],'artist':SONGS[i[1]]['artist'],'score':i[0]})
@@ -27,6 +27,5 @@ def runQuery(query):
 	inv_idx = build_inverted_index(tokenized_songs)
 	idf = compute_idf(inv_idx, n_songs)
 	doc_norms = computer_doc_norms(inv_idx, idf, n_songs)
-	scores = song_search(query, inv_idx, idf, doc_norms)
+	scores = song_search(query.lower(), inv_idx, idf, doc_norms)
 	return scores[0:10]
-

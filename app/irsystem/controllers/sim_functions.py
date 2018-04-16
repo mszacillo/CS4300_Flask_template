@@ -87,8 +87,5 @@ def song_search(query, index, idf, doc_norms):
 			results.append(((temp[idx]/dnorm), idx))
 		else:
 			results.append(((temp[idx]), idx))
-	
-	return sorted(results, key=lambda x: x[0], reverse=True)		
 
-
-
+	return sorted(results, key=lambda x: x[0], reverse=True)

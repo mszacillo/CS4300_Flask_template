@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="/static/main.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
         <script src="../../static/javascript/script.js"> </script>
+        <script src="../../static/javascript/script2.js"> </script>
     </head>
     <body>
         <div class="personalcontainer">
@@ -11,7 +12,7 @@
                 <p class="projectdetails">Project Name: {{ name }}</p>
                 <p class="projectdetails">Student Name: ({{ netid }})</p>
             </div>
-            <form class="form-inline global-search searchform">
+            <form class="form-inline global-search searchform" id="mainform">
                 <h1>
                     Tunage
                 </h1>
@@ -30,13 +31,10 @@
                     <h1 class="searchheader">{{output_message}}</h1>
                     <table class="data-results">
                             <tr class="resultheader">
-                                <th class="playbutton"></th>
-                                <th>Title</th>
-                                <th>Artist</th>
                             </tr>
-                    {% for d in data %}  
+                    {% for d in data %}
                             <tr class="result-item">
-                                <td class="playbutton"><img src="../../images/playbutton.png"></img></td>
+                                <!--<td class="playbutton"><img src="../../images/playbutton.png"></img></td>-->
                                 <td class="data-songname">{{d.song}}</td>
                                 <td class="data-artist">{{d.artist}}</td>
                             </tr>
