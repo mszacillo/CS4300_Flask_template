@@ -1,10 +1,10 @@
-from Similarity import *
+from sim_functions import *
 
 with open("songData.json", "r") as f:
 	song_transcripts = json.load(f)
 
 songs = [song_transcripts[index] for index in song_transcripts]
-
+print(songs[0])
 start_time = time.time()
 tokenized_songs = tokenize_transcript(songs)
 execution_time = time.time() - start_time
@@ -19,6 +19,7 @@ execution_time = time.time() - start_time
 print("Inverted index took %f seconds." % execution_time)
 
 start_time = time.time()
+
 idf = compute_idf(inv_idx, n_songs)
 execution_time = time.time() - start_time
 
