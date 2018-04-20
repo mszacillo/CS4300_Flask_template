@@ -18,7 +18,7 @@ def getQuery():
 	returnquery = runQuery(inputquery.lower())
 	data = []
 	for i in returnquery:
-		data.append({'title':SONGS[i[1]]['title'],'artist':SONGS[i[1]]['artist'],'score':i[0]})
+		data.append({'title':SONGS[i[1]]['title'],'artist':SONGS[i[1]]['artist'],'score':i[0],'lyrics':" ".join(SONGS[i[1]]['lyrics'])})
 	return json.dumps({'status':'OK', "data":data})
 
 def runQuery(query):
