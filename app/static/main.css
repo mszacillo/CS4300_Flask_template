@@ -71,6 +71,10 @@ h1{
 .table tr:nth-child(4n+1){
 	background-color: #ff9602;
 }
+.lyricsdiv{
+	max-height:135px;
+	overflow:scroll;
+}
 
 .imgholder{
 	padding: 0px;

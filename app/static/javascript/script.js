@@ -1,3 +1,28 @@
+function getIndicesOf(searchStr, str, caseSensitive) {
+    var searchStrLen = searchStr.length;
+    if (searchStrLen == 0) {
+        return [];
+    }
+    var startIndex = 0, index, indices = [];
+    if (!caseSensitive) {
+        str = str.toLowerCase();
+        searchStr = searchStr.toLowerCase();
+    }
+    while ((index = str.indexOf(searchStr, startIndex)) > -1) {
+        indices.push(index);
+        startIndex = index + searchStrLen;
+    }
+    return indices;
+}
+
+function getLyricshtml(query,lyricstring){
+	var indices = getIndicesOf(lyricstring,query,false);
+	if(indices.length > 0){
+		console.log("hello")
+	}
+	return lyricstring
+}
+
 $(window).ready(function(){
 	function getResults(){
 		var query = {"search":$('#input').val()};
@@ -12,21 +37,20 @@ $(window).ready(function(){
 				var htmlOutput = '';
 				htmlOutput += "<table class='table'><thead><tr><th></th><th width='45%'>Title</th><th>Artist</th><th>Match Score</th><th width='4%'></th></thead><tbody>"
 				for(var i = 0; i < 10; i++){
+					var lyrics = getLyricshtml(String(query),String(j[i]['lyrics']))
 					htmlOutput += "<tr data-lyrics='"+String(2*i+2)+"'><td>Play</td><td>" + j[i]['title'] + "</td>"
 					+ "<td>" + j[i]['artist'] + "</td>"
 					+ "<td>" + (j[i]['score']).toFixed(2) + "</td>"
 					+ "<td class='imgholder'><img class='lyricsbutton' src='/static/images/lyrics.png'></img></td>"
 					+ "</tr>"
-					+ "<tr class='hidden'><td Colspan='5' class='lyrics'>"+j[i]['lyrics']+"</td></tr>"
+					+ "<tr class='hidden'><td Colspan='5' class='lyrics'><div class='lyricsdiv'>"+lyrics+"</div></td></tr>"
 				};
 				htmlOutput += "</tbody></table>";
 				$('.searchresults').html(htmlOutput)
 
 				$('.imgholder').on('click',function(){
 					index = Number($(this).closest('tr').attr('data-lyrics'))
-					console.log(index)
 					myself= $("tr:nth-of-type("+String(index)+")")
-					console.log(myself)
 					if(myself.hasClass('hidden')){
 						myself.removeClass('hidden')
 					}
