@@ -2,6 +2,16 @@ from . import *
 from sim_functions import *
 from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
+import numpy as np
+import json
+import re
+from sklearn.feature_extraction.text import TfidfVectorizer
+from scipy.sparse.linalg import svds
+import matplotlib
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import normalize
+from sklearn.manifold import TSNE
+from textblob import TextBlob
 
 from flask import Flask, request
 
@@ -14,11 +24,18 @@ print("loading this page")
 
 @irsystem.route('search',methods=["POST"])
 def getQuery():
-	inputquery = request.form['search'].lower()
-	returnquery = runQuery(inputquery.lower())
+	my_json = request.get_json()
+	inputquery = my_json.get('search').lower()
+	positive = int(my_json.get('sentiment'))
+	returnquery = runQueryML(inputquery.lower())
 	data = []
 	for i in returnquery:
-		data.append({'title':SONGS[i[1]]['title'],'artist':SONGS[i[1]]['artist'],'score':i[0],'lyrics':" ".join(SONGS[i[1]]['lyrics'])})
+		lyrics = " ".join(tokenize_one_transcript(i[1]['lyrics']))
+		sentiment = TextBlob(lyrics)
+		if positive and sentiment.sentiment.polarity >=0:
+			data.append({'title':i[1]['title'],'artist':i[1]['artist'],'score':i[0],'lyrics':lyrics})
+		elif not positive and sentiment.sentiment.polarity <=0 :
+			data.append({'title':i[1]['title'],'artist':i[1]['artist'],'score':i[0],'lyrics':lyrics})
 	return json.dumps({'status':'OK', "data":data})
 
 def runQuery(query):
@@ -29,3 +46,28 @@ def runQuery(query):
 	doc_norms = computer_doc_norms(inv_idx, idf, n_songs)
 	scores = song_search(query.lower(), inv_idx, idf, doc_norms)
 	return scores[0:10]
+
+def runQueryML(query):
+	vectorizer = TfidfVectorizer(stop_words = "english",max_df=.8)
+	songlist = [song["lyrics"] for song in SONGS]
+	songlist.append(query)
+	lyric_matrix = vectorizer.fit_transform(songlist).transpose()
+	#print(lyric_matrix.shape)
+	#u, s, v = svds(lyric_matrix, k=100)
+	words_compressed, _, docs_compressed = svds(lyric_matrix, k = 40)
+	docs_compressed = docs_compressed.transpose()
+
+	word_to_index = vectorizer.vocabulary_
+
+	index_to_word = {i:t for t,i, in word_to_index.items()}
+	words_compressed = normalize(words_compressed, axis =1)
+
+	docs_compressed = normalize(docs_compressed, axis=1)
+	return closest_songs(docs_compressed.shape[0]-1,docs_compressed)
+
+
+def closest_songs(project_index_in,docs_compressed, k=50):
+	sims = docs_compressed.dot(docs_compressed[project_index_in,:])
+	asort = np.argsort(-sims)[:k+1]
+	print(len(asort))
+	return [(sims[i]/sims[asort[0]],SONGS[i]) for i in asort[1:]]
