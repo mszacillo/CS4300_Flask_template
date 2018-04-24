@@ -34,11 +34,10 @@ def get_artist_links(section_url):
 def get_songs(proxies, user_agents, artist):
 	artist_url = BASE_URL + artist[0] + "/" + artist + ".html"
 	print("Searching for " + artist + "...")
-	sleep(random.randint(0, 10))
+	sleep(random.randint(0, 5))
 	html = requests.get(artist_url, headers = {'User-Agent': random.choice(user_agents)}, proxies = random.choice(proxies)).content
 	soup = BeautifulSoup(html, "lxml")
 	song_urls = [(BASE_URL + str(song['href'])[3:]) for song in soup.findAll(target="_blank")]
-	print(song_urls)
 	return song_urls
 
 def get_lyrics(proxies, user_agents, artist, songs):
@@ -47,7 +46,7 @@ def get_lyrics(proxies, user_agents, artist, songs):
 	count = 0
 	for songurl in songs:
 		count += 1
-		sleep(random.randint(0, 15))
+		sleep(random.randint(0, 5))
 		elapsed_time = time() - start_time
 		print('Request: {}; Frequency: {} requests/s'.format(count, count/elapsed_time))
 		html = requests.get(songurl, headers = {'User-Agent': random.choice(user_agents)}, proxies = random.choice(proxies)).content
