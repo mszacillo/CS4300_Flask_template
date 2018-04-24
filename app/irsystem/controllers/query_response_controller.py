@@ -7,8 +7,6 @@ import json
 import re
 from sklearn.feature_extraction.text import TfidfVectorizer
 from scipy.sparse.linalg import svds
-import matplotlib
-import matplotlib.pyplot as plt
 from sklearn.preprocessing import normalize
 from sklearn.manifold import TSNE
 from textblob import TextBlob
