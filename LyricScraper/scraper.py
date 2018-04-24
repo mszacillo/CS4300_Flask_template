@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 from time import time
 from time import sleep
-from random import randint
+import random
 import pandas as pd
 import json
 
@@ -38,17 +38,18 @@ def get_songs(proxies, user_agents, artist):
 	html = requests.get(artist_url, headers = {'User-Agent': random.choice(user_agents)}, proxies = random.choice(proxies)).content
 	soup = BeautifulSoup(html, "lxml")
 	song_urls = [(BASE_URL + str(song['href'])[3:]) for song in soup.findAll(target="_blank")]
+	print(song_urls)
 	return song_urls
 
 def get_lyrics(proxies, user_agents, artist, songs):
 	songinfo = []
 	start_time = time()
-	requests = 0
+	count = 0
 	for songurl in songs:
-		requests += 1
+		count += 1
 		sleep(random.randint(0, 15))
 		elapsed_time = time() - start_time
-		print('Request: {}; Frequency: {} requests/s'.format(requests, requests/elapsed_time))
+		print('Request: {}; Frequency: {} requests/s'.format(count, count/elapsed_time))
 		html = requests.get(songurl, headers = {'User-Agent': random.choice(user_agents)}, proxies = random.choice(proxies)).content
 		soup = BeautifulSoup(html, "lxml")
 		title = soup.find('div', {'class': "ringtone"}).findNext("b").text
@@ -60,8 +61,8 @@ def get_lyrics(proxies, user_agents, artist, songs):
 def scrape(proxies, user_agents, artists):
 	scraped_data = []
 	for artist in artist_list_manual:
-		songurls = get_songs(proxies, user_agents, "lorde")
-		songdict = get_lyrics(proxies, user_agents, "lorde", songurls)
+		songurls = get_songs(proxies, user_agents, artist)
+		songdict = get_lyrics(proxies, user_agents, artist, songurls)
 		scraped_data = scraped_data + songdict
 	return scraped_data
 
