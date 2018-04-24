@@ -25,18 +25,18 @@ function getLyricshtml(query,lyricstring){
 
 $(window).ready(function(){
 	function getResults(){
-		var query = {"search":$('#input').val()};
+		var query = JSON.stringify({"search":$('#input').val(),"sentiment":$('#selecter').val()});
 		$.ajax({
 			url: 'search',
 			data: query,
+			contentType:'application/json',
 			type: 'POST',
 			success: function(response) {
 				j = JSON.parse(response).data;
-				console.log(j);
-				console.log(j[0]);
 				var htmlOutput = '';
 				htmlOutput += "<table class='table'><thead><tr><th></th><th width='45%'>Title</th><th>Artist</th><th>Match Score</th><th width='4%'></th></thead><tbody>"
-				for(var i = 0; i < 10; i++){
+				highestindex = Math.min(20,j.length)
+				for(var i = 0; i < highestindex; i++){
 					var lyrics = getLyricshtml(String(query),String(j[i]['lyrics']))
 					htmlOutput += "<tr data-lyrics='"+String(2*i+2)+"'><td>Play</td><td>" + j[i]['title'] + "</td>"
 					+ "<td>" + j[i]['artist'] + "</td>"

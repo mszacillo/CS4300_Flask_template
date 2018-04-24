@@ -16,6 +16,12 @@ def tokenize_transcript(transcripts):
 
 	return transcripts
 
+def tokenize_one_transcript(lyrics):
+	lyrics = lyrics.replace("\\n", " ").replace("[Hook", " ").replace("[Verse", " ").replace("b", " ", 1)
+	lyrics = re.findall(r"[a-z]+", lyrics.lower())
+	return lyrics
+
+
 def build_inverted_index(songs):
 	indexdict = {}
 
