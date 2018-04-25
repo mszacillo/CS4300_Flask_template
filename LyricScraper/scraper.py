@@ -37,7 +37,17 @@ def get_songs(proxies, user_agents, artist):
 	sleep(6)
 	html = requests.get(artist_url, headers = {'User-Agent': random.choice(user_agents)}, proxies = random.choice(proxies)).content
 	soup = BeautifulSoup(html, "lxml")
-	song_urls = [(BASE_URL + str(song['href'])[3:]) for song in soup.findAll(target="_blank")]
+	all_div = soup.find("div",{"id":"listAlbum"})
+	song_urls = []
+	for item in all_div.findChildren():
+		if item.name=='div':
+			if item.text=="other songs:":
+				return songs_urls
+		if item.name=="a":
+			try:
+				song_urls.append("https://www.azlyrics.com" + item['href'][2:])
+			except:
+				pass
 	return song_urls
 
 def get_lyrics(proxies, user_agents, artist, songs):
