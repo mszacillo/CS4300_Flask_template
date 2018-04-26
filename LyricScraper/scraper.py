@@ -7,7 +7,7 @@ import pandas as pd
 import json
 
 BASE_URL = "https://www.azlyrics.com/"
-testurl = "https://www.azlyrics.com/l/lorde.html"
+clauses = ["Christmas", "mixtape", "soundtrack", "compilation", "boxset"]
 
 user_agents = [
         'Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11',
@@ -20,11 +20,18 @@ user_agents = [
         'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.151 Safari/535.19']
 
 #USE https://free-proxy-list.net/ TO FIND TEMPORARY PROXIES. MAKE SURE THEY READ HTTPS. ELITE PROXIES PREFERRED.
-proxies = [{"http": "http://147.135.210.114:54566"}, {"http": "http://47.206.51.67:8080"}, {"http": "http://89.236.17.106:3128"}]
+proxies = [
+		{"http": "http://117.6.161.118:53281"},
+		{"http": "http://92.53.73.138:8118"}, 
+		{"http": "http://103.86.185.190:8080"}, 
+		{"http": "http://13.115.228.99:3128"},
+		{"http": "http://41.193.223.86:8080"},
+		{"http": "http://51.15.86.88:3128"},
+		{"http": "http://85.115.15.2:8080"}]
 
 #manual input of artist data
-artist_list_manual = ["beatles", "springsteen", "redhotchilipeppers", "queen", "guns", "ledzeppelin", "edsheeran", "beyonce", "frankocean", "rollingstones", "brunomars", "taylorswift", "calvinharris", "ladygaga", "lorde"]
-ref_to_artist = {"beatles": "The Beatles", "springsteen": "Bruce Springsteen", "redhotchilipeppers":"The Red Hot Chili Peppers", "queen": "Queen", "guns":"Guns N Roses", "ledzeppelin": "Led Zeppelin", "edsheeran":"Ed Sheeran", "beyonce":"Beyonce", "frankocean":"Frank Ocean", "rollingstones":"The Rolling Stones", "brunomars":"Bruno Mars", "taylorswift":"Taylor Swift", "calvinharris":"Calvin Harris", "ladygaga":"Lady Gaga", "lorde":"Lorde"}
+artist_list_manual = ["daftpunk"]
+ref_to_artist = {"daftpunk":"Daft Punk", "mia":"M.I.A.", "ettajames":"Etta James", "radiohead":"Radiohead", "madonna":"Madonna", "feist":"Feist", "arianagrande":"Ariana Grande", "sufjanstevens":"Sufjan Stevesn", "vincestaples":"Vince Staples", "samsmith":"Sam Smith", "azealiabanks":"Azealia Banks", "aliciakeys":"Alicia Keys", "leonalewis":"Leona Lewis", "killers":"The Killers", "cardi-b":"Cardi B", "drake":"Drake", "leonbridges":"Leon Bridges", "rihanna":"Rihanna", "dualipa":"Dua Lipa", "arcticmonkeys":"Arctic Monkeys", "bjork":"Bjork", "gorillaz":"Gorillaz", "deathgrips":"Death Grips", "fleetfoxes":"The Fleet Foxes", "bigthief":"Big Thief", "stvincent":"St. Vincent", "carlyraejepsen":"Carly Rae Jepsen", "charlixcx":"Charli XCX", "lanadelrey":"Lana Del Rey", "angelolsen":"Angel Olsen", "sza": "Sza", "selenagomez":"Selena Gomez", "beatles": "The Beatles", "springsteen": "Bruce Springsteen", "redhotchilipeppers":"The Red Hot Chili Peppers", "queen": "Queen", "guns":"Guns N Roses", "ledzeppelin": "Led Zeppelin", "edsheeran":"Ed Sheeran", "knowles":"Beyonce", "frankocean":"Frank Ocean", "rollingstones":"The Rolling Stones", "brunomars":"Bruno Mars", "taylorswift":"Taylor Swift", "calvinharris":"Calvin Harris", "ladygaga":"Lady Gaga", "lorde":"Lorde"}
 
 def get_artist_links(section_url):
 	html = urlopen(section_url).read()
@@ -34,18 +41,29 @@ def get_artist_links(section_url):
 def get_songs(proxies, user_agents, artist):
 	artist_url = BASE_URL + artist[0] + "/" + artist + ".html"
 	print("Searching for " + artist + "...")
-	sleep(6)
+	sleep(random.randint(9, 11))
 	html = requests.get(artist_url, headers = {'User-Agent': random.choice(user_agents)}, proxies = random.choice(proxies)).content
 	soup = BeautifulSoup(html, "lxml")
 	all_div = soup.find("div",{"id":"listAlbum"})
+	mixtape = False
 	song_urls = []
 	for item in all_div.findChildren():
 		if item.name=='div':
 			if item.text=="other songs:":
-				return songs_urls
+				return song_urls
+			elif any(clause in item.text for clause in clauses):
+				mixtape = True
+				continue
+			else:
+				mixtape = False
 		if item.name=="a":
 			try:
-				song_urls.append("https://www.azlyrics.com" + item['href'][2:])
+				if("radiohead" not in str(item['href'][2:]) and "madonna" not in str(item['href'][2:]) and "ettajames" not in str(item['href'][2:]) and "mia" not in str(item['href'][2:])):
+					continue
+				elif(mixtape):
+					continue
+				else:
+					song_urls.append("https://www.azlyrics.com" + item['href'][2:])
 			except:
 				pass
 	return song_urls
@@ -56,7 +74,7 @@ def get_lyrics(proxies, user_agents, artist, songs):
 	count = 0
 	for songurl in songs:
 		count += 1
-		sleep(6)
+		sleep(random.randint(9, 14))
 		elapsed_time = time() - start_time
 		print('Request: {}; Frequency: {} requests/s'.format(count, count/elapsed_time))
 		html = requests.get(songurl, headers = {'User-Agent': random.choice(user_agents)}, proxies = random.choice(proxies)).content
