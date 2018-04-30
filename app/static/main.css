@@ -56,6 +56,9 @@ h1{
 	font-size: 80px;
 	font-style:italic;
 }
+img {
+    display: inline-block;
+}
 .form-group{
 	padding:20px;
 }
