@@ -11,12 +11,7 @@
     <body>
         <div class="personalcontainer">
             <div class="loginarea">
-                {% if tok %}
-                    Logged in to Spotify
-                {% else %}
-                    <a href="auth">Log in to Spotify</a>
-                    {{tok}}
-                {% endif %}
+                <a href="auth">Login to Spotify</a>
             </div>
             <form class="form-inline global-search searchform" id="mainform" target="_self">
                 <div id="formheader">

@@ -18,10 +18,7 @@ def search():
 		output_message = "Your search: " + query
 	'''
 	if request.method == "GET":
-		global access_token
-		mytok = access_token
-		print(mytok)
-		return render_template('search.html', name=project_name, netid=net_id, output_message=output_message,tok=mytok)
+		return render_template('search.html', name=project_name, netid=net_id, output_message=output_message)
 	if request.method=="POST":
 		response = bencode({
         "Access-Control-Allow-Origin": "*",

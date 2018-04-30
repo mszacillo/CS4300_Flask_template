@@ -26,8 +26,8 @@ function searchsong(artist,track,idx){
       $('.embedded').eq(idx).html(returnitem)
     },
     error: function(error){
-      console.log(error)
-      returnitem = "error"
+      $('.embedded').eq(idx).find('.loader').remove()
+      $('.embedded').eq(idx).html("Log into Spotify for song previews")
     }
   })
 }
