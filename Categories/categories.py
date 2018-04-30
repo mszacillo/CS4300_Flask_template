@@ -39,6 +39,7 @@ def createdicts (invdict):
 			if x not in wordsetdict:
 				wordsetdict[x] = set()
 			wordsetdict[x].append(k)
+	return wordsetdict
 
 #selectCategory = set of words in Category or Categories selected, songs = dictionary with songIDs and sets
 def score (selectCategory, songs):
