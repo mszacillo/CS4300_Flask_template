@@ -35,8 +35,8 @@ def getQuery():
 	data = []
 	for score, idx in returnquery:
 		#lyrics = " ".join(tokenize_one_transcript(i[1]['lyrics']))
-		lyrics = SONGS[idx]["lyrics"]
-		lyrics = " ".join(lyrics)
+		lyrics = songlist[idx]
+		#lyrics = " ".join(lyrics)
 		data.append({'title':SONGS[idx]['title'],'artist':SONGS[idx]['artist'],'score':score,'lyrics':lyrics})
 	return json.dumps({'status':'OK', "data":data})
 

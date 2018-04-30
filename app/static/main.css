@@ -73,11 +73,9 @@ img {
 }
 .table tr:nth-child(4n+1){
 	background-color: #FFB68E;
-  border: 1px solid black;
 }
 .table tbody tr{
 	height:110px;
-  border: 1px solid black;
 }
 .lyricsdiv{
 	max-height:135px;
@@ -89,8 +87,8 @@ img {
     padding-top: 9px;
 }
 .table{
-	color:#064789;
-  border: 1px solid black;
+ color:#064789;
+ border: 1px solid #aaaaaa;
 }
 #formheader{
 	clear:both;
@@ -118,7 +116,7 @@ img {
     max-width: 11px;
     overflow: scroll;
     background: white;
-    color: #064789;
+    color: #064789b3;
 }
 .hidden{
 	display:none;
