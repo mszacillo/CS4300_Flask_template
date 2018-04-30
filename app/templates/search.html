@@ -10,6 +10,14 @@
     </head>
     <body>
         <div class="personalcontainer">
+            <div class="loginarea">
+                {% if tok %}
+                    Logged in to Spotify
+                {% else %}
+                    <a href="auth">Log in to Spotify</a>
+                    {{tok}}
+                {% endif %}
+            </div>
             <form class="form-inline global-search searchform" id="mainform" target="_self">
                 <div id="formheader">
                     <h1>
@@ -54,10 +62,12 @@
                 {% endif %}
                 </form>
             </div>
+            <!--
             <div class="footer">
                 <p class="projectdetails">Project Name: {{ name }}</p>
                 <p class="projectdetails">Student Name: ({{ netid }}</p>
             </div>
+            -->
         </div>
     </body>
 

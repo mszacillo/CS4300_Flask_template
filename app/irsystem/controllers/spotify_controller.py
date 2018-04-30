@@ -6,6 +6,7 @@ from flask import Flask, request, redirect, g, render_template
 import requests
 import base64
 import urllib
+from app.irsystem.controllers.settings import access_token, refresh_token
 
 # Authentication Steps, paramaters, and responses are defined at https://developer.spotify.com/web-api/authorization-guide/
 # Visit this url to see all the steps, parameters, and expected response. 
@@ -32,8 +33,6 @@ STATE = ""
 SHOW_DIALOG_bool = True
 SHOW_DIALOG_str = str(SHOW_DIALOG_bool).lower()
 auth_data = {}
-access_token = None
-refresh_token = None
 
 
 auth_query_parameters = {
@@ -91,8 +90,6 @@ def callback():
     # Combine profile and playlist data to display
     display_arr = [profile_data] + playlist_data["items"]
     auth_data = display_arr
-
-    print(access_token)
     return redirect("")
 
 @irsystem.route("getcode",methods=["POST"])
@@ -103,7 +100,6 @@ def getcode():
     headers = {"Authorization": "Basic {}".format(base64encoded)}
     refreshdata = {"refresh_token":refresh_token,"grant_type":"refresh_token"}
     r = requests.post("https://accounts.spotify.com/api/token",data=refreshdata,headers=headers)
-    print(type(r.content))
     access_token = json.loads(r.content)['access_token']
     return str(access_token)
 
@@ -118,7 +114,5 @@ def getsong():
     headers = {"Authorization": "Bearer {}".format(tok)}
     q = "artist:"+artist+"%20"+"track:"+track+"&type=track&limit=1"
     url = "https://api.spotify.com/v1/search?q="+q
-    print(url)
     r = requests.get(url,headers=headers)
-    print(r.content)
     return json.dumps(r.content)
