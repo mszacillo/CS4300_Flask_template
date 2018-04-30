@@ -35,10 +35,11 @@ def selectCategory (categories, categoryDict):
 def createdicts (invdict):
 	wordsetdict = {}
 	for k,v in invdict:
-		for x,y in v:
-			if x not in wordsetdict:
-				wordsetdict[x] = set()
-			wordsetdict[x].append(k)
+		for a in v:
+			for x, y in a:
+				if x not in wordsetdict:
+					wordsetdict[x] = set()
+				wordsetdict[x].append(k)
 	return wordsetdict
 
 #selectCategory = set of words in Category or Categories selected, songs = dictionary with songIDs and sets
