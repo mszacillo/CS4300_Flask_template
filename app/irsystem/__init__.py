@@ -6,3 +6,4 @@ irsystem = Blueprint('irsystem', __name__, url_prefix='/',static_folder='static'
 # Import all controllers
 from controllers.query_response_controller import getQuery
 from controllers.search_controller import *
+from controllers.spotify_controller import *

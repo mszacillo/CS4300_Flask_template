@@ -3,24 +3,22 @@ import json
 import time
 import math
 from nltk.tokenize import TreebankWordTokenizer
+from difflib import SequenceMatcher
 
 import numpy as np
 
 tokenizer = TreebankWordTokenizer()
 
+def similar(a,b):
+	return SequenceMatcher(None, a, b).ratio()
+
 def tokenize_transcript(transcripts):
 	for idx, song in enumerate(transcripts):
-		lyrics = str(song["lyrics"])
+		lyrics = song["lyrics"]
 		lyrics = lyrics.replace("\\n", " ").replace("[Hook", " ").replace("[Verse", " ").replace("b", " ", 1)
 		transcripts[idx]["lyrics"] = re.findall(r"[a-z]+", lyrics.lower())
 
 	return transcripts
-
-def tokenize_one_transcript(lyrics):
-	lyrics = lyrics.replace("\\n", " ").replace("[Hook", " ").replace("[Verse", " ").replace("b", " ", 1)
-	lyrics = re.findall(r"[a-z]+", lyrics.lower())
-	return lyrics
-
 
 def build_inverted_index(songs):
 	indexdict = {}
@@ -61,7 +59,7 @@ def computer_doc_norms(inv_idx, idf, n_songs):
 
 	return np.sqrt(norms)
 
-def song_search(query, index, idf, doc_norms):
+def song_search(query, index, idf, songs, doc_norms):
 
 	querytokens = tokenizer.tokenize(query)
 	uniquetokens = np.unique(querytokens)
@@ -86,12 +84,42 @@ def song_search(query, index, idf, doc_norms):
 	qnorm = math.sqrt(qnorm)
 	temp = np.divide(temp, qnorm)
 
+	where_are_NaNs = np.isnan(temp)
+	temp[where_are_NaNs] = 0
+	
 	results = []
 
 	for idx, dnorm in enumerate(doc_norms):
 		if(dnorm != 0):
-			results.append(((temp[idx]/dnorm), idx))
+			score = ((temp[idx]/dnorm) * 0.5) + (similar(query.lower(),songs[idx]["title"].lower()) * 0.5)
+			results.append((score, idx))
 		else:
-			results.append(((temp[idx]), idx))
+			score = ((temp[idx] * 0.5) + (similar(query.lower(),songs[idx]["title"].lower()) * 0.5))
+			results.append((score, idx))
+	
+	return sorted(results, key=lambda x: x[0], reverse=True)	
 
-	return sorted(results, key=lambda x: x[0], reverse=True)
+def closest_songs(project_index_in, docs_compressed, k=10):
+	sims = docs_compressed.dot(docs_compressed[project_index_in,:])
+	asort = np.argsort(-sims)[:k+1]
+	results = [(1, project_index_in)] + [(sims[i]/sims[asort[0]], i) for i in asort[1:]]	
+	return results
+
+def svd_cosine(scores, closest):
+	idx_to_score = {}
+	results = []
+	for score, idx in scores:
+		if idx not in idx_to_score.keys():
+			idx_to_score[idx] = score
+
+	for score, idx in closest:
+		if idx not in idx_to_score.keys():
+			idx_to_score[idx] = score
+		else:
+			idx_to_score[idx] = idx_to_score[idx] + (score*0.3)
+
+	for idx, score in idx_to_score.items():
+		results.append((score, idx))
+
+	return sorted(results, key=lambda x: x[0], reverse=True)	
+

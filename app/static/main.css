@@ -118,3 +118,24 @@ h1{
 	margin: 10px;
     background-color: #ff9502;
 }
+.categorysearchlink{
+	display:block;
+}
+.mood{
+	display:inline-block;
+	padding:20px;
+	background:gray;
+	border-radius:10px;
+	color:black;
+	margin:5px;
+	width:100px;
+}
+.mood:hover{
+	filter:brightness(120%);
+}
+.mood-groups{
+	padding:20px;
+}
+.mood-selected{
+	background-color:#ff9801;
+}

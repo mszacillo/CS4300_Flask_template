@@ -1,25 +1,62 @@
-const token = "BQBVO5ACFSUY1MelZcrK8b9Xxlgjcn5wN5GT4N8Z6LZRsAkY4DFXvp4iD8bli_nE1llqQGicL0IY5kvz6_wbRQTnjBu0r-DPrG_PWqs8o9Aj2WcHHb_aakcOy7I8pf2-_HKPoEIavBqmcuSH0DAM8hecmNyw_64bbdEa"
+const client_secret = "c8f4c7bc3fa64aa3a94b916863b0a0b1"
+const client_id = "6b7e72ea122540c5a57c17fa11c7f75a"
+token = ""
 
-window.onSpotifyWebPlaybackSDKReady = () => {
-  const player = new Spotify.Player({
-    name: 'Web Playback SDK Quick Start Player',
-    getOAuthToken: cb => { cb(token); }
-  });
+widgethtml1 = '<iframe src="https://open.spotify.com/embed?uri='
+widgethtml2 = ' width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>'
 
-  // Error handling
-  player.addListener('initialization_error', ({ message }) => { console.error(message); });
-  player.addListener('authentication_error', ({ message }) => { console.error(message); });
-  player.addListener('account_error', ({ message }) => { console.error(message); });
-  player.addListener('playback_error', ({ message }) => { console.error(message); });
+function searchsong(artist,track){
+  //console
+  base_url = "https://api.spotify.com/v1/search"
+  artistdata = JSON.stringify({"track":track,"artist":artist})
+  console.log(artistdata)
+  $.ajax({
+    type:'POST',
+    url:'getsong',
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    data:artistdata,
+    success: function(response){
+      var myjson = JSON.parse(response)
+      var uri = myjson['tracks']['items'][0]['uri']
+      console.log(uri)
+      $('.personalcontainer').append(widgethtml1+uri+widgethtml2)
+    },
+    error: function(error){
+      console.log(error)
+    }
+  })
+}
 
-  // Playback status updates
-  player.addListener('player_state_changed', state => { console.log(state); });
+function getcode(){
+    $.ajax({
+      url: 'getcode',
+      contentType:'application/json',
+      type: 'POST',
+      success: function(response) {
+        console.log(response)
+        return response
+      },
+      error: function(error){
+        console.log(error);
+      }
+    });
+}
 
-  // Ready
-  player.addListener('ready', ({ device_id }) => {
-    console.log('Ready with Device ID', device_id);
-  });
+function refreshtoken(token){
+    $.ajax({
+      url: 'getcode',
+      contentType:'application/json',
+      type: 'POST',
+      success: function(response) {
+        console.log(JSON.parse(response))
+        return JSON.parse(response)
+      },
+      error: function(error){
+        console.log(error);
+      }
+    });
+}
 
-  // Connect to the player!
-  player.connect();
-};
+$(window).ready(function(){
+})

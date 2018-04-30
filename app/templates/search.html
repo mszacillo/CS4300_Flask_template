@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="/static/main.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
         <script src="/static/javascript/script.js"> </script>
+        <script src="/static/javascript/spotifycontroller.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Lemon" rel="stylesheet">
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     </head>
@@ -26,8 +27,20 @@
                         </select>
                         <input id="input" type="text" name="search" class="form-control" placeholder="Your Input">
                     </div>
+                    <div class="mood-groups hidden">
+                        <div class="mood">Happy</div>
+                        <div class="mood">Sad</div>
+                        <div class="mood">Angry</div>
+                        <div class="mood">Breakup</div>
+                        <div class="mood">Tired</div>
+                        <div class="mood">Angry</div>
+                        <div class="mood">Love</div>
+                        <div class="mood">Relaxed</div>
+                        <div class="mood">Chill</div>
+                    </div>
                     <button type="button" class="btn btn-info" id="searchbutton"> Go! </button>
                 </form>
+                <a class="categorysearchlink">Search by Category</a>
             </div>
             <div class="searchresults">
                 <form class="form-inline global-search">

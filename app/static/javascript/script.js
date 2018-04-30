@@ -72,4 +72,11 @@ $(window).ready(function(){
 		getResults();
 		return false;
 	})
+	$('.categorysearchlink').click(function(){
+		$('.mood-groups').toggleClass('hidden')
+		$('.form-group').toggleClass('hidden')
+	});
+	$('.mood').click(function(){
+		$(this).toggleClass('mood-selected')
+	})
 });
