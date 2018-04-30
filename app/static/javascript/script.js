@@ -37,8 +37,10 @@ $(window).ready(function(){
 				htmlOutput += "<table class='table'><thead><tr><th></th><th width='45%'>Title</th><th>Artist</th><th>Match Score</th><th width='4%'></th></thead><tbody>"
 				highestindex = Math.min(20,j.length)
 				for(var i = 0; i < highestindex; i++){
+					console.log(searchsong)
+					var embedded = searchsong(j[i]['artist'],j[i]['title'])
 					var lyrics = getLyricshtml(String(query),String(j[i]['lyrics']))
-					htmlOutput += "<tr data-lyrics='"+String(2*i+2)+"'><td>Play</td><td>" + j[i]['title'] + "</td>"
+					htmlOutput += "<tr data-lyrics='"+String(2*i+2)+"'><td>"+embedded+"</td><td>" + j[i]['title'] + "</td>"
 					+ "<td>" + j[i]['artist'] + "</td>"
 					+ "<td>" + (j[i]['score']).toFixed(2) + "</td>"
 					+ "<td class='imgholder'><img class='lyricsbutton' src='/static/images/lyrics.png'></img></td>"

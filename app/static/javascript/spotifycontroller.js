@@ -1,11 +1,9 @@
-const client_secret = "c8f4c7bc3fa64aa3a94b916863b0a0b1"
-const client_id = "6b7e72ea122540c5a57c17fa11c7f75a"
 token = ""
 
 widgethtml1 = '<iframe src="https://open.spotify.com/embed?uri='
-widgethtml2 = ' width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>'
+widgethtml2 = '" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>'
 
-function searchsong(artist,track){
+function searchsong(artist,track,idx){
   //console
   base_url = "https://api.spotify.com/v1/search"
   artistdata = JSON.stringify({"track":track,"artist":artist})
@@ -16,16 +14,18 @@ function searchsong(artist,track){
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     data:artistdata,
+    async:false,
     success: function(response){
       var myjson = JSON.parse(response)
       var uri = myjson['tracks']['items'][0]['uri']
-      console.log(uri)
-      $('.personalcontainer').append(widgethtml1+uri+widgethtml2)
+      returnitem = widgethtml1+uri+widgethtml2
     },
     error: function(error){
       console.log(error)
+      returnitem = "error"
     }
   })
+  return returnitem
 }
 
 function getcode(){
@@ -57,6 +57,3 @@ function refreshtoken(token){
       }
     });
 }
-
-$(window).ready(function(){
-})
