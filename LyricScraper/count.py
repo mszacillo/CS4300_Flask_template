@@ -2,4 +2,9 @@ import json
 with open("concatenated.json", "r") as f:
 	songs2 = json.load(f)
 
-print(len(songs2))
+artists = []
+for song in songs2:
+	if song["artist"] not in artists:
+		artists.append(song["artist"])
+
+print(sorted(artists))

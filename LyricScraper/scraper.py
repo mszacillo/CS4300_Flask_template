@@ -7,7 +7,7 @@ import pandas as pd
 import json
 
 BASE_URL = "https://www.azlyrics.com/"
-clauses = ["Christmas", "mixtape", "soundtrack", "compilation", "boxset"]
+clauses = ["Christmas", "mixtape", "soundtrack", "compilation", "boxset", "EP", "Audition", "Metropolis"]
 
 user_agents = [
         'Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11',
@@ -21,17 +21,17 @@ user_agents = [
 
 #USE https://free-proxy-list.net/ TO FIND TEMPORARY PROXIES. MAKE SURE THEY READ HTTPS. ELITE PROXIES PREFERRED.
 proxies = [
-		{"http": "http://117.6.161.118:53281"},
-		{"http": "http://92.53.73.138:8118"}, 
-		{"http": "http://103.86.185.190:8080"}, 
-		{"http": "http://13.115.228.99:3128"},
-		{"http": "http://41.193.223.86:8080"},
-		{"http": "http://51.15.86.88:3128"},
-		{"http": "http://85.115.15.2:8080"}]
+		{"http": "http://153.149.169.201:3128"},
+		{"http": "http://47.91.164.65:3128"}, 
+		{"http": "http://89.236.17.106:3128"}, 
+		{"http": "http://47.206.51.67:8080"},
+		{"http": "http://80.211.11.90:53"},
+		{"http": "http://159.89.192.39:3128"},
+		{"http": "http://145.249.106.107:8118"}]
 
 #manual input of artist data
-artist_list_manual = ["daftpunk"]
-ref_to_artist = {"daftpunk":"Daft Punk", "mia":"M.I.A.", "ettajames":"Etta James", "radiohead":"Radiohead", "madonna":"Madonna", "feist":"Feist", "arianagrande":"Ariana Grande", "sufjanstevens":"Sufjan Stevesn", "vincestaples":"Vince Staples", "samsmith":"Sam Smith", "azealiabanks":"Azealia Banks", "aliciakeys":"Alicia Keys", "leonalewis":"Leona Lewis", "killers":"The Killers", "cardi-b":"Cardi B", "drake":"Drake", "leonbridges":"Leon Bridges", "rihanna":"Rihanna", "dualipa":"Dua Lipa", "arcticmonkeys":"Arctic Monkeys", "bjork":"Bjork", "gorillaz":"Gorillaz", "deathgrips":"Death Grips", "fleetfoxes":"The Fleet Foxes", "bigthief":"Big Thief", "stvincent":"St. Vincent", "carlyraejepsen":"Carly Rae Jepsen", "charlixcx":"Charli XCX", "lanadelrey":"Lana Del Rey", "angelolsen":"Angel Olsen", "sza": "Sza", "selenagomez":"Selena Gomez", "beatles": "The Beatles", "springsteen": "Bruce Springsteen", "redhotchilipeppers":"The Red Hot Chili Peppers", "queen": "Queen", "guns":"Guns N Roses", "ledzeppelin": "Led Zeppelin", "edsheeran":"Ed Sheeran", "knowles":"Beyonce", "frankocean":"Frank Ocean", "rollingstones":"The Rolling Stones", "brunomars":"Bruno Mars", "taylorswift":"Taylor Swift", "calvinharris":"Calvin Harris", "ladygaga":"Lady Gaga", "lorde":"Lorde"}
+artist_list_manual = ["postmalone", "shawnmendes", "janellemone"]
+ref_to_artist = {"janellemone":"Janelle Monáe", "grimes":"Grimes", "shawnmendes":"Shawn Mendes", "postmalone":"Post Malone", "daftpunk":"Daft Punk", "mia":"M.I.A.", "ettajames":"Etta James", "radiohead":"Radiohead", "madonna":"Madonna", "feist":"Feist", "arianagrande":"Ariana Grande", "sufjanstevens":"Sufjan Stevesn", "vincestaples":"Vince Staples", "samsmith":"Sam Smith", "azealiabanks":"Azealia Banks", "aliciakeys":"Alicia Keys", "leonalewis":"Leona Lewis", "killers":"The Killers", "cardi-b":"Cardi B", "drake":"Drake", "leonbridges":"Leon Bridges", "rihanna":"Rihanna", "dualipa":"Dua Lipa", "arcticmonkeys":"Arctic Monkeys", "bjork":"Bjork", "gorillaz":"Gorillaz", "deathgrips":"Death Grips", "fleetfoxes":"The Fleet Foxes", "bigthief":"Big Thief", "stvincent":"St. Vincent", "carlyraejepsen":"Carly Rae Jepsen", "charlixcx":"Charli XCX", "lanadelrey":"Lana Del Rey", "angelolsen":"Angel Olsen", "sza": "Sza", "selenagomez":"Selena Gomez", "beatles": "The Beatles", "springsteen": "Bruce Springsteen", "redhotchilipeppers":"The Red Hot Chili Peppers", "queen": "Queen", "guns":"Guns N Roses", "ledzeppelin": "Led Zeppelin", "edsheeran":"Ed Sheeran", "knowles":"Beyonce", "frankocean":"Frank Ocean", "rollingstones":"The Rolling Stones", "brunomars":"Bruno Mars", "taylorswift":"Taylor Swift", "calvinharris":"Calvin Harris", "ladygaga":"Lady Gaga", "lorde":"Lorde"}
 
 def get_artist_links(section_url):
 	html = urlopen(section_url).read()
@@ -58,7 +58,7 @@ def get_songs(proxies, user_agents, artist):
 				mixtape = False
 		if item.name=="a":
 			try:
-				if("radiohead" not in str(item['href'][2:]) and "madonna" not in str(item['href'][2:]) and "ettajames" not in str(item['href'][2:]) and "mia" not in str(item['href'][2:])):
+				if("malone" not in str(item['href'][2:]) and "janelle" not in str(item['href'][2:]) and "shawn" not in str(item['href'][2:])):
 					continue
 				elif(mixtape):
 					continue

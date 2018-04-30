@@ -2,6 +2,7 @@ import re
 import json
 import time
 import math
+import copy
 from nltk.tokenize import TreebankWordTokenizer
 from difflib import SequenceMatcher
 
@@ -12,13 +13,13 @@ tokenizer = TreebankWordTokenizer()
 def similar(a,b):
 	return SequenceMatcher(None, a, b).ratio()
 
-def tokenize_transcript(transcripts):
-	for idx, song in enumerate(transcripts):
+def tokenize_transcript(temp):
+	for idx, song in enumerate(temp):
 		lyrics = song["lyrics"]
 		lyrics = lyrics.replace("\\n", " ").replace("[Hook", " ").replace("[Verse", " ").replace("b", " ", 1)
-		transcripts[idx]["lyrics"] = re.findall(r"[a-z]+", lyrics.lower())
+		temp[idx]["lyrics"] = re.findall(r"[a-z]+", lyrics.lower())
 
-	return transcripts
+	return temp
 
 def build_inverted_index(songs):
 	indexdict = {}

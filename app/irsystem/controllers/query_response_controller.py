@@ -8,34 +8,30 @@ import re
 from sklearn.feature_extraction.text import TfidfVectorizer
 from scipy.sparse.linalg import svds
 from sklearn.preprocessing import normalize
-from sklearn.manifold import TSNE
-from textblob import TextBlob
 
 from flask import Flask, request
 
 with open("./app/helper_functions/songData.json", "r") as f:
 	song_transcripts = json.load(f)
 
+print("loading this page")
+
 SONGS = [song_transcripts[index] for index in song_transcripts]
 songlist = [song["lyrics"] for song in SONGS]
-tokenized_songs = tokenize_transcript(SONGS)
-n_songs = len(tokenized_songs)
-inv_idx = build_inverted_index(tokenized_songs)
-idf = compute_idf(inv_idx, n_songs)
-doc_norms = computer_doc_norms(inv_idx, idf, n_songs)
-
 vectorizer = TfidfVectorizer(stop_words = "english",max_df=.8)
-lyric_matrix = vectorizer.fit_transform(songlist).transpose()
-words_compressed, _, docs_compressed = svds(lyric_matrix, k = 40)
-docs_compressed = docs_compressed.transpose()
-
-print("loading this page")
+docs_compressed = svds(vectorizer.fit_transform(songlist).transpose(), k = 40)[2].transpose()
+tokenize_transcript(SONGS)
+inv_idx = build_inverted_index(SONGS)
+idf = compute_idf(inv_idx, len(SONGS))
+doc_norms = computer_doc_norms(inv_idx, idf, len(SONGS))
 
 @irsystem.route('search',methods=["POST"])
 def getQuery():
+	#docs_compressed = docs_compressed.transpose()
+
 	my_json = request.get_json()
 	inputquery = my_json.get('search').lower()
-	returnquery = runQuery(inputquery.lower())
+	returnquery = runQuery(inputquery.lower(), inv_idx, idf, SONGS, doc_norms, docs_compressed)
 	data = []
 	for score, idx in returnquery:
 		#lyrics = " ".join(tokenize_one_transcript(i[1]['lyrics']))
@@ -43,7 +39,7 @@ def getQuery():
 		data.append({'title':SONGS[idx]['title'],'artist':SONGS[idx]['artist'],'score':score,'lyrics':lyrics})
 	return json.dumps({'status':'OK', "data":data})
 
-def runQuery(query):
+def runQuery(query, inv_idx, idf, SONGS, doc_norms, docs_compressed):
 	scores = song_search(query.lower(), inv_idx, idf, SONGS, doc_norms)
 	toptitle = scores[0][1] 
 	closestsongs = closest_songs(toptitle, docs_compressed)
