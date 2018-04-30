@@ -11,9 +11,9 @@ body {
     padding-left:5%;
     padding-right:5%;
     padding-top:2%;
-    background-color: #2d2d2c;
+    background: linear-gradient(to bottom right, pink, yellow);
     height:100%;
-    color:white;
+    color:#F0386B;
 	font-family: 'Lato', sans-serif;
 	clear:both;
 	overflow:auto;
@@ -45,13 +45,13 @@ background-color: #ff9602;
 border: none
 }
 .step-links a{
-color: #4285F4;
+color: #FAFF00;
 }
 .projectdetails{
 	line-height:1;
 }
 h1{
-	color:#ff9801;
+	color: #F0386B;
 	font-family: 'Lemon', cursive;
 	font-size: 80px;
 	font-style:italic;
@@ -64,15 +64,17 @@ h1{
 	font-size:20px;
 	padding-top: 5px;
     padding-bottom: 5px;
-    color:white;
+    color:#FAFF00;
     border-radius:8px;
     display:block;
 }
 .table tr:nth-child(4n+1){
-	background-color: #ff9602;
+	background-color: #FFB68E;
+  border: 1px solid black;
 }
 .table tbody tr{
 	height:110px;
+  border: 1px solid black;
 }
 .lyricsdiv{
 	max-height:135px;
@@ -84,7 +86,8 @@ h1{
     padding-top: 9px;
 }
 .table{
-	color:white;
+	color:#064789;
+  border: 1px solid black;
 }
 #formheader{
 	clear:both;
@@ -95,14 +98,14 @@ h1{
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #2d2d2c;
-    color: white;
+    color: #F0386B;
     text-align: left;
     padding-left:20px;
 }
 .table th{
-	color:white;
-	background-color:#2d2d2c;
+	color:#064789;
+	background-color: white;
+  opacity: 0.75;
 }
 .lyricsbutton{
 	width: 26px;
@@ -112,14 +115,14 @@ h1{
     max-width: 11px;
     overflow: scroll;
     background: white;
-    color: gray;
+    color: #FFB68E;
 }
 .hidden{
 	display:none;
 }
 #selecter{
 	margin: 10px;
-    background-color: #ff9502;
+    background-color: #FFB68E;
 }
 .categorysearchlink{
 	display:block;
@@ -129,7 +132,7 @@ h1{
 	padding:20px;
 	background:gray;
 	border-radius:10px;
-	color:black;
+	color:#FFB68E;
 	margin:5px;
 	width:100px;
 }
@@ -140,7 +143,7 @@ h1{
 	padding:20px;
 }
 .mood-selected{
-	background-color:#ff9801;
+	background-color:#FF37A6;
 }
 .loader {
   border: 16px solid #f3f3f3;
