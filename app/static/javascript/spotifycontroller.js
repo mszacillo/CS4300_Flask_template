@@ -1,31 +1,35 @@
 token = ""
 
 widgethtml1 = '<iframe src="https://open.spotify.com/embed?uri='
-widgethtml2 = '" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>'
+widgethtml2 = '" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>'
 
 function searchsong(artist,track,idx){
   //console
   base_url = "https://api.spotify.com/v1/search"
   artistdata = JSON.stringify({"track":track,"artist":artist})
-  console.log(artistdata)
   $.ajax({
     type:'POST',
     url:'getsong',
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     data:artistdata,
-    async:false,
     success: function(response){
       var myjson = JSON.parse(response)
-      var uri = myjson['tracks']['items'][0]['uri']
-      returnitem = widgethtml1+uri+widgethtml2
+      try{
+        var uri = myjson['tracks']['items'][0]['uri']
+        var returnitem = widgethtml1+uri+widgethtml2
+      }
+      catch(err){
+        var returnitem = "Unable to find song"
+      }
+      $('.embedded').eq(idx).find('.loader').remove()
+      $('.embedded').eq(idx).html(returnitem)
     },
     error: function(error){
       console.log(error)
       returnitem = "error"
     }
   })
-  return returnitem
 }
 
 function getcode(){
@@ -34,7 +38,6 @@ function getcode(){
       contentType:'application/json',
       type: 'POST',
       success: function(response) {
-        console.log(response)
         return response
       },
       error: function(error){
