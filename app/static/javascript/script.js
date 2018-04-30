@@ -40,7 +40,7 @@ $(window).ready(function(){
 					console.log(searchsong)
 					var embedded = searchsong(j[i]['artist'],j[i]['title'],i)
 					var lyrics = getLyricshtml(String(query),String(j[i]['lyrics']))
-					htmlOutput += "<tr data-lyrics='"+String(2*i+2)+"'><td><div class='embedded'><div class='loader'></div></div></td><td>" + j[i]['title'] + "</td>"
+					htmlOutput += "<tr data-lyrics='"+String(2*i+2)+"'><td class='embedholder'><div class='embedded'><div class='loader'></div></div></td><td>" + j[i]['title'] + "</td>"
 					+ "<td>" + j[i]['artist'] + "</td>"
 					+ "<td>" + (j[i]['score']).toFixed(2) + "</td>"
 					+ "<td class='imgholder'><img class='lyricsbutton' src='/static/images/lyrics.png'></img></td>"

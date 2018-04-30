@@ -71,11 +71,16 @@ img {
     border-radius:8px;
     display:block;
 }
-.table tr:nth-child(4n+1){
-	background-color: #FFB68E;
-}
 .table tbody tr{
-	height:110px;
+    background-color: #ffffff8c;
+    padding-bottom: 20px;
+    height: 80px;
+    margin-top: 20px;
+}
+.table tbody tr td{
+	vertical-align: middle;
+	border: none;
+	padding: 0px;
 }
 .lyricsdiv{
 	max-height:135px;
@@ -87,8 +92,11 @@ img {
     padding-top: 9px;
 }
 .table{
- color:#064789;
- border: 1px solid #aaaaaa;
+    color: #064789;
+    display: table;
+    border-spacing: 0px 25px;
+    margin: auto;
+    border-collapse: separate;
 }
 #formheader{
 	clear:both;
@@ -163,4 +171,7 @@ img {
 }
 .embedded{
 	width:325;
+}
+.embedholder{
+	padding:0px;
 }
